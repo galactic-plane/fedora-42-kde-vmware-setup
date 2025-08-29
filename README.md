@@ -1,13 +1,13 @@
-# Microsoft Development Stack Setup for Fedora Linux
+# Microsoft Development Stack Setup for Fedora 42 KDE Plasma (VMware)
 
-A comprehensive, production-ready script to set up a complete Microsoft development environment on Fedora Linux. This script installs and configures all essential tools for modern development with Microsoft technologies.
+A comprehensive, production-ready script to set up a complete Microsoft development environment on Fedora 42 KDE Plasma running under VMware. This script installs and configures all essential tools for modern development with Microsoft technologies, optimized for the KDE desktop environment and VMware virtualization platform.
 
 ## 🚀 Quick Start
 
 ```bash
 # Clone the repository
-git clone https://github.com/galactic-plane/fedora-setup.git
-cd fedora-setup
+git clone https://github.com/galactic-plane/fedora-42-kde-vmware-setup.git
+cd fedora-42-kde-vmware-setup
 
 # Make the script executable
 chmod +x ms-dev-setup-script.sh
@@ -29,7 +29,7 @@ sudo ./ms-dev-setup-script.sh
 - **Git** - Version control system
 - **Node.js & npm** - JavaScript runtime and package manager
 - **Python 3 & pip** - Python development environment
-- **Podman** - Container management (Docker alternative)
+- **Podman** - Container management (Docker alternative, KDE integrated)
 
 ### System Tools
 - **htop** - Interactive process viewer
@@ -37,7 +37,7 @@ sudo ./ms-dev-setup-script.sh
 - **sysstat** - System performance tools
 - **net-tools** - Network utilities
 - **nethogs** - Network bandwidth monitor
-- **mesa-utils** - Graphics utilities
+- **mesa-utils** - Graphics utilities (VMware 3D acceleration support)
 
 ## ✨ Features
 
@@ -49,7 +49,9 @@ sudo ./ms-dev-setup-script.sh
 - **Error handling** - Graceful failure handling with detailed error messages
 
 ### 🔧 Smart Configuration
-- **Dynamic version detection** - Automatically detects Fedora version
+- **Dynamic version detection** - Automatically detects Fedora version (optimized for v42)
+- **KDE Plasma integration** - Configures tools for optimal KDE experience
+- **VMware optimization** - Includes VMware Tools verification and 3D acceleration checks
 - **Idempotent execution** - Safe to run multiple times
 - **Duplicate prevention** - Prevents duplicate PATH entries and aliases
 - **Repository management** - Safely manages Microsoft package repositories
@@ -62,7 +64,9 @@ sudo ./ms-dev-setup-script.sh
 
 ## 🛠️ System Requirements
 
-- **Operating System**: Fedora Linux (any supported version)
+- **Operating System**: Fedora 42 (specifically tested)
+- **Desktop Environment**: KDE Plasma (optimized for)
+- **Virtualization**: VMware Workstation/Player (includes VMware Tools integration)
 - **Architecture**: x86_64
 - **Privileges**: Root access (sudo)
 - **Network**: Internet connectivity to Microsoft repositories
@@ -127,14 +131,14 @@ fedora-setup/
 - `package_installed()` - Verifies package installation
 
 ### Installation Steps
-1. **System Updates** - Updates all system packages
-2. **Development Tools** - Installs essential development utilities
+1. **System Updates** - Updates all system packages and Fedora 42 specific components
+2. **Development Tools** - Installs essential development utilities optimized for KDE
 3. **Microsoft Repositories** - Configures Microsoft package sources
-4. **Microsoft Applications** - Installs VS Code, Edge, and .NET
+4. **Microsoft Applications** - Installs VS Code, Edge, and .NET with KDE integration
 5. **Azure Tools** - Installs Azure CLI and Functions Core Tools
 6. **Power Platform** - Installs Power Platform CLI
-7. **System Configuration** - Configures PATH, aliases, and certificates
-8. **VMware Integration** - Verifies VMware Tools (if applicable)
+7. **System Configuration** - Configures PATH, aliases, and certificates for KDE
+8. **VMware Integration** - Verifies VMware Tools and 3D acceleration support
 
 ## 🚨 Troubleshooting
 
@@ -154,8 +158,11 @@ sudo ./ms-dev-setup-script.sh
 # Check internet connectivity
 ping packages.microsoft.com
 
-# Check DNS resolution
+# Check DNS resolution (VMware NAT specific)
 nslookup packages.microsoft.com
+
+# Test VMware network adapter
+ip addr show ens33
 ```
 
 **Repository Conflicts**
@@ -214,11 +221,13 @@ npm update -g
 5. Open a Pull Request
 
 ### Development Guidelines
-- Test on clean Fedora installations
+- Test on clean Fedora 42 KDE Plasma installations
+- Verify VMware Tools compatibility
 - Follow bash best practices
 - Add logging for new features
 - Update documentation
 - Ensure idempotent operations
+- Test KDE integration features
 
 ## 📝 Changelog
 
@@ -243,7 +252,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - Microsoft for providing excellent development tools on Linux
-- Fedora Project for the robust Linux distribution
+- Fedora Project for the robust Linux distribution and KDE Plasma integration
+- VMware for excellent Linux virtualization support
+- KDE Community for the outstanding Plasma desktop environment
 - Contributors and testers who helped improve this script
 
 ## 📞 Support
@@ -251,7 +262,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Issues**: Report bugs and request features via GitHub Issues
 - **Documentation**: Check this README and inline script comments
 - **Community**: Join discussions in GitHub Discussions
+- **VMware-specific issues**: Check VMware Tools status and 3D acceleration
 
 ---
 
-**Made with ❤️ for the Fedora and Microsoft development community**
+**Made with ❤️ for the Fedora 42 KDE Plasma and Microsoft development community**
