@@ -1,6 +1,24 @@
 # Microsoft Development Stack Setup for Fedora 42 KDE Plasma (VMware)
 
-A comprehensive, production-ready script to set up a complete Microsoft development environment on Fedora 42 KDE Plasma running under VMware. This script installs and configures all essential tools for modern development with Microsoft technologies, optimized for the KDE desktop environment and VMware virtualization platform.
+A comprehensive, production-ready script to set up a complete Microsoft development environment on Fedora 42 KDE Plasma### 🚨 Troubleshooting
+
+### Common Issues
+
+**User Cancellation**
+```bash
+# If you cancelled and want to run again
+sudo ./ms-dev-setup-script.sh
+# The script will show the software list again
+```
+
+**Permission Denied**
+```bash
+# Ensure script is executable
+chmod +x ms-dev-setup-script.sh
+
+# Run with sudo
+sudo ./ms-dev-setup-script.sh
+```er VMware. This script installs and configures all essential tools for modern development with Microsoft technologies, optimized for the KDE desktop environment and VMware virtualization platform.
 
 ## 🖥️ Target System
 
@@ -50,6 +68,8 @@ sudo ./ms-dev-setup-script.sh
 ### 🔒 Security & Reliability
 - **Privilege validation** - Ensures script runs with proper permissions
 - **System validation** - Verifies Fedora compatibility and network connectivity
+- **Interactive confirmation** - Shows complete software list before installation
+- **User consent** - Allows users to review and approve before making changes
 - **File backups** - Automatically backs up modified system files
 - **Input validation** - Validates downloaded files before installation
 - **Error handling** - Graceful failure handling with detailed error messages
@@ -85,6 +105,14 @@ sudo ./ms-dev-setup-script.sh
 sudo ./ms-dev-setup-script.sh
 ```
 
+The script will:
+1. **Validate system requirements** (Fedora compatibility, network connectivity)
+2. **Display comprehensive software list** with categories and estimated sizes
+3. **Request user confirmation** before making any changes
+4. **Proceed with installation** only after user approval
+5. **Provide detailed progress updates** throughout the process
+6. **Generate final summary** with all installed software versions
+
 ### Post-Installation Steps
 After the script completes, run these commands as your regular user (not root):
 
@@ -113,6 +141,38 @@ pac help
 dotnet new console -n TestApp
 cd TestApp
 dotnet run
+```
+
+### What You'll See
+When you run the script, you'll get an interactive experience:
+
+```
+==========================================
+📦 SOFTWARE TO BE INSTALLED/UPDATED
+==========================================
+
+🔧 SYSTEM UPDATES:
+   • System package updates
+   • Firmware updates (skipped for VMs)
+
+🛠️  DEVELOPMENT TOOLS:
+   • Git (version control)
+   • Node.js (JavaScript runtime)
+   • npm (Node.js package manager)
+   • Python 3 with pip (Python package manager)
+   • Podman (container management)
+
+🏢 MICROSOFT DEVELOPMENT STACK:
+   • Visual Studio Code (code editor)
+   • Microsoft Edge (web browser)
+   • .NET 9 SDK (development framework)
+
+... [full list] ...
+
+📁 ESTIMATED DOWNLOAD SIZE: ~1-2 GB
+💾 ESTIMATED DISK SPACE NEEDED: ~3-4 GB
+
+🤔 Do you want to proceed with the installation? [Y/n]:
 ```
 
 ## 📁 Project Structure
@@ -237,7 +297,14 @@ npm update -g
 
 ## 📝 Changelog
 
-### v2.0.0 (Current)
+### v2.1.0 (Current)
+- ✅ Added interactive software list with user confirmation
+- ✅ Enhanced user experience with detailed software breakdown
+- ✅ Added estimated download sizes and disk space requirements
+- ✅ Improved cancellation handling with graceful exit
+- ✅ Added comprehensive pre-installation review process
+
+### v2.0.0 (Previous)
 - ✅ Added comprehensive security validations
 - ✅ Implemented dynamic Fedora version detection
 - ✅ Enhanced error handling and logging

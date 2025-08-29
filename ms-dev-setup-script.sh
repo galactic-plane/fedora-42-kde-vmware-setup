@@ -65,6 +65,9 @@ fi
 
 FEDORA_VERSION=$(get_fedora_version)
 
+# Show software list and get user confirmation
+get_user_confirmation
+
 log_action "Microsoft Development Stack Setup started by user: $ACTUAL_USER"
 log_action "Detected Fedora version: $FEDORA_VERSION"
 
@@ -113,6 +116,98 @@ print_installing() {
 
 print_updating() {
     echo "→ Updating $1..."
+}
+
+# Function to display software list and get user confirmation
+show_software_list() {
+    echo "=========================================="
+    echo "📦 SOFTWARE TO BE INSTALLED/UPDATED"
+    echo "=========================================="
+    echo ""
+    echo "🔧 SYSTEM UPDATES:"
+    echo "   • System package updates"
+    echo "   • Firmware updates (skipped for VMs)"
+    echo ""
+    echo "🛠️  DEVELOPMENT TOOLS:"
+    echo "   • Git (version control)"
+    echo "   • Node.js (JavaScript runtime)"
+    echo "   • npm (Node.js package manager)"
+    echo "   • Python 3 with pip (Python package manager)"
+    echo "   • Podman (container management)"
+    echo ""
+    echo "📊 PERFORMANCE & MONITORING TOOLS:"
+    echo "   • htop (interactive process viewer)"
+    echo "   • iotop (I/O monitoring)"
+    echo "   • sysstat (system performance tools)"
+    echo "   • net-tools (network utilities)"
+    echo "   • nethogs (network bandwidth monitoring)"
+    echo "   • mesa-utils (OpenGL utilities)"
+    echo ""
+    echo "🏢 MICROSOFT DEVELOPMENT STACK:"
+    echo "   • Visual Studio Code (code editor)"
+    echo "   • Microsoft Edge (web browser)"
+    echo "   • .NET 9 SDK (development framework)"
+    echo ""
+    echo "☁️  AZURE DEVELOPMENT TOOLS:"
+    echo "   • Azure CLI (command-line interface)"
+    echo "   • Azure Functions Core Tools (optional, via npm)"
+    echo ""
+    echo "⚡ POWER PLATFORM:"
+    echo "   • Power Platform CLI (low-code development tools)"
+    echo ""
+    echo "🖥️  VMWARE INTEGRATION:"
+    echo "   • VMware Tools (guest integration)"
+    echo "   • 3D acceleration support"
+    echo ""
+    echo "⚙️  SYSTEM CONFIGURATION:"
+    echo "   • Development aliases (docker=podman, sysmon=htop, etc.)"
+    echo "   • .NET tools PATH configuration"
+    echo "   • HTTPS development certificates"
+    echo "   • Microsoft repositories and GPG keys"
+    echo ""
+    echo "📁 ESTIMATED DOWNLOAD SIZE: ~1-2 GB"
+    echo "💾 ESTIMATED DISK SPACE NEEDED: ~3-4 GB"
+    echo ""
+    echo "⚠️  NOTE: This script will:"
+    echo "   • Add Microsoft package repositories"
+    echo "   • Install software system-wide (requires root/sudo)"
+    echo "   • Modify user configuration files (.bashrc)"
+    echo "   • Create backups of modified system files"
+    echo ""
+}
+
+# Function to get user confirmation
+get_user_confirmation() {
+    show_software_list
+    
+    while true; do
+        echo -n "🤔 Do you want to proceed with the installation? [Y/n]: "
+        read -r response
+        
+        # Default to yes if empty response
+        if [ -z "$response" ]; then
+            response="y"
+        fi
+        
+        case "$response" in
+            [Yy]|[Yy][Ee][Ss])
+                echo ""
+                echo "✅ Proceeding with installation..."
+                echo ""
+                return 0
+                ;;
+            [Nn]|[Nn][Oo])
+                echo ""
+                echo "❌ Installation cancelled by user."
+                echo "   No changes have been made to your system."
+                echo ""
+                exit 0
+                ;;
+            *)
+                echo "Please answer yes (y) or no (n)."
+                ;;
+        esac
+    done
 }
 
 echo "Step 1: System Updates"
