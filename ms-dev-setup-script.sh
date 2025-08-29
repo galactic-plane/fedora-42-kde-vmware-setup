@@ -50,26 +50,10 @@ log_action() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "/var/log/ms-dev-setup.log"
 }
 
-# Check privileges and validate system
-check_privileges
-validate_system
-
-# Get the actual user (in case script is run with sudo)
-if [ "$SUDO_USER" ]; then
-    ACTUAL_USER="$SUDO_USER"
-    ACTUAL_HOME="/home/$SUDO_USER"
-else
-    ACTUAL_USER="$USER"
-    ACTUAL_HOME="$HOME"
-fi
-
-FEDORA_VERSION=$(get_fedora_version)
-
-# Show software list and get user confirmation
-get_user_confirmation
-
-log_action "Microsoft Development Stack Setup started by user: $ACTUAL_USER"
-log_action "Detected Fedora version: $FEDORA_VERSION"
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
 
 echo "=========================================="
 echo "Microsoft Development Stack Setup"
@@ -210,7 +194,32 @@ get_user_confirmation() {
     done
 }
 
-echo "Step 1: System Updates"
+# ============================================
+# MAIN SCRIPT EXECUTION STARTS HERE
+# ============================================
+
+# Check privileges and validate system
+check_privileges
+validate_system
+
+# Get the actual user (in case script is run with sudo)
+if [ "$SUDO_USER" ]; then
+    ACTUAL_USER="$SUDO_USER"
+    ACTUAL_HOME="/home/$SUDO_USER"
+else
+    ACTUAL_USER="$USER"
+    ACTUAL_HOME="$HOME"
+fi
+
+FEDORA_VERSION=$(get_fedora_version)
+
+# Show software list and get user confirmation
+get_user_confirmation
+
+log_action "Microsoft Development Stack Setup started by user: $ACTUAL_USER"
+log_action "Detected Fedora version: $FEDORA_VERSION"
+
+echo "=========================================="
 echo "======================"
 log_action "Starting system updates"
 print_updating "system packages"
