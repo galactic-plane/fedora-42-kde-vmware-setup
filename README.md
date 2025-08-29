@@ -1,6 +1,6 @@
 # Microsoft Development Stack Setup for Fedora 42 KDE Plasma (VMware)
 
-A script to set up a starter Microsoft development environment on Fedora 42 KDE Plasma under VMware. This script installs and configures all essential tools for modern development with Microsoft technologies, optimized for the KDE desktop environment and VMware virtualization platform.
+A script to set up a starter Microsoft development environment on Fedora 42 KDE Plasma under VMware. This script installs and configures basic tools for modern development with Microsoft technologies, optimized for the KDE desktop environment and VMware virtualization platform.
 
 ## 🖥️ Target System
 
