@@ -6,7 +6,7 @@ A comprehensive, production-ready script to set up a complete Microsoft developm
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/fedora-setup.git
+git clone https://github.com/galactic-plane/fedora-setup.git
 cd fedora-setup
 
 # Make the script executable
