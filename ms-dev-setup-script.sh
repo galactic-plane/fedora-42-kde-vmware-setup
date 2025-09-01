@@ -443,19 +443,40 @@ echo ""
 
 echo "Step 8: VMware Tools Verification"
 echo "================================="
-if systemctl is-active --quiet vmtoolsd; then
-    print_status "VMware Tools service running"
-else
-    echo "⚠ VMware Tools not running - checking installation"
-    if ! package_installed "open-vm-tools"; then
-        print_installing "VMware Tools"
-        dnf install -y open-vm-tools open-vm-tools-desktop
-        systemctl enable --now vmtoolsd
-    else
-        systemctl start vmtoolsd || echo "  (Could not start VMware Tools service)"
-    fi
+
+# Auto-detect VMware environment
+is_vmware=false
+if lspci | grep -qi "VMware" || grep -qi vmware /sys/class/dmi/id/product_name 2>/dev/null; then
+    is_vmware=true
 fi
-echo ""
+
+if [ "$is_vmware" = false ]; then
+    echo "This step is only needed if you are running under VMware."
+    read -p "Are you running this system in VMware? (y/n): " vmware_answer
+    case "$vmware_answer" in
+        [Yy]*) is_vmware=true ;;
+        *) echo "Skipping VMware Tools setup."; is_vmware=false ;;
+    esac
+fi
+
+if [ "$is_vmware" = true ]; then
+    if systemctl is-active --quiet vmtoolsd; then
+        print_status "VMware Tools service running"
+    else
+        echo "⚠ VMware Tools not running - checking installation"
+        if ! package_installed "open-vm-tools"; then
+            print_installing "VMware Tools"
+            dnf install -y open-vm-tools open-vm-tools-desktop
+            systemctl enable --now vmtoolsd
+        else
+            systemctl start vmtoolsd || echo "  (Could not start VMware Tools service)"
+        fi
+    fi
+    echo ""
+else
+    echo "VMware Tools step skipped."
+    echo ""
+fi
 
 echo "=========================================="
 echo "INSTALLATION COMPLETE!"
