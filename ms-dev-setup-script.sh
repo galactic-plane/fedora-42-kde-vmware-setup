@@ -1,17 +1,143 @@
 #!/bin/bash
 
-# Microsoft Developer Stack Installer for Fedora 42+ KDE Plasma
-# A comprehensive automation script that sets up a complete Microsoft development environment
-# on Fedora Linux with KDE Plasma desktop. The script intelligently detects VMware 
-# environments and configures appropriate integrations.
+# ================================================================================
+# Fedora-42-MS-Setup: Microsoft Development Stack Automated Installer
+# ================================================================================
 #
-# Features:
-# - VMware auto-detection with conditional installation
-# - Interactive software list with user confirmation
-# - Comprehensive logging and error handling
-# - System monitoring and performance tools
-# - Complete Microsoft development stack
-# - Azure and Power Platform development tools
+# PROJECT: Fedora-42-MS-Setup  
+# DESCRIPTION: Comprehensive automation script for setting up a complete Microsoft 
+#              development environment on Fedora 42+ with KDE Plasma desktop
+# REPOSITORY: https://github.com/galactic-plane/fedora-42-ms-setup
+# LICENSE: MIT
+# VERSION: 2.0
+# AUTHOR: galactic-plane
+# CREATED: 2024
+# UPDATED: September 2025
+#
+# ================================================================================
+# WHAT THIS SCRIPT INSTALLS
+# ================================================================================
+#
+# 🏢 MICROSOFT DEVELOPMENT STACK:
+#   • Visual Studio Code - Microsoft's flagship code editor
+#   • .NET 9 SDK - Complete .NET development framework with runtime and ASP.NET Core
+#   • PowerShell Core - Cross-platform PowerShell (Microsoft repo or GitHub fallback)
+#   • Microsoft Edge - Chromium-based web browser for testing
+#   • Azure CLI - Command-line interface for Azure services
+#   • Azure Functions Core Tools - Local development/testing for Azure Functions (npm)
+#   • Power Platform CLI - Low-code development tools (auto-installed via .NET tools)
+#
+# 🛠️ ESSENTIAL DEVELOPMENT TOOLS:
+#   • Git - Version control with automatic user configuration
+#   • Node.js & npm - JavaScript runtime with package manager
+#   • Python 3 - Complete Python environment (pip, setuptools, virtualenv)
+#   • GitHub CLI - Official GitHub command-line interface
+#   • Podman - Container management with Docker compatibility aliases
+#   • Build Tools - gcc, g++, make, cmake, autoconf, automake, dev headers
+#
+# 📊 SYSTEM PERFORMANCE & MONITORING:
+#   • htop - Interactive process viewer
+#   • iotop - I/O monitoring utility
+#   • sysstat - System performance statistics
+#   • net-tools - Network configuration utilities
+#   • nethogs - Network bandwidth monitoring per process
+#   • mesa-utils/glx-utils - OpenGL utilities for graphics diagnostics
+#
+# 🖥️ VMWARE INTEGRATION (AUTO-DETECTED):
+#   • VMware Tools - Guest integration for better performance
+#   • 3D Acceleration Support - Enhanced graphics for VMware environments
+#   • Clipboard Sharing - Seamless copy/paste between host and guest
+#   • Automatic Service Configuration - vmtoolsd service setup and monitoring
+#
+# ================================================================================
+# KEY FEATURES
+# ================================================================================
+#
+# 🔍 INTELLIGENT SYSTEM DETECTION:
+#   • Automated VMware Detection - Multiple methods (lspci, DMI, processes)
+#   • Fedora Version Validation - Ensures compatibility with Fedora 42+ and DNF5
+#   • System Requirements Check - Validates disk space, network, permissions
+#
+# 🛡️ SAFETY & RELIABILITY:
+#   • Comprehensive Logging - All actions logged to /var/log/ms-dev-setup.log
+#   • Configuration Backups - Auto backup to /var/backups/ms-dev-setup/
+#   • Error Handling - Graceful failure recovery with detailed error messages
+#   • User Confirmation - Interactive approval before making system changes
+#   • Rollback Safety - Can be re-run safely; handles existing installations
+#
+# ⚙️ AUTOMATED CONFIGURATION:
+#   • Shell Environment Setup - Development aliases and PATH configuration
+#   • Microsoft Services Integration - .NET HTTPS certs, Git config, Podman setup
+#   • VMware Optimization - Tools service, 3D acceleration, guest integration
+#   • Development Directories - Organized folder structure in ~/Development/
+#
+# ================================================================================
+# POST-INSTALLATION CONFIGURATION
+# ================================================================================
+#
+# SHELL ALIASES CREATED:
+#   • sysmon → htop (system monitoring)
+#   • docker → podman (container compatibility)
+#   • dev → cd ~/Development (quick navigation)
+#   • Git shortcuts: gs, ga, gc, gp, gl
+#   • Azure shortcuts: az-login, az-subs
+#
+# DIRECTORY STRUCTURE CREATED:
+#   ~/Development/
+#   ├── dotnet/          # .NET projects and tools
+#   ├── nodejs/          # Node.js applications
+#   ├── python/          # Python projects and virtual environments
+#   ├── azure/           # Azure-related projects and scripts
+#   ├── scripts/         # Development and automation scripts
+#   └── repos/           # Git repositories
+#
+# PATH ADDITIONS:
+#   • ~/.dotnet/tools (for .NET global tools)
+#   • ~/.npm-global/bin (for npm global packages)
+#
+# SERVICES CONFIGURED:
+#   • vmtoolsd (VMware Tools daemon) - if VMware detected
+#   • podman.socket (for Docker compatibility)
+#
+# ================================================================================
+# PREREQUISITES
+# ================================================================================
+#
+# • Operating System: Fedora 42+ with KDE Plasma Desktop Environment
+# • Network: Active internet connection for package downloads
+# • Permissions: User account with sudo privileges
+# • Storage: Minimum 4GB free disk space
+# • Memory: At least 2GB RAM recommended for installation process
+#
+# ================================================================================
+# USAGE
+# ================================================================================
+#
+# Direct execution:
+#   curl -sSL https://raw.githubusercontent.com/galactic-plane/fedora-42-ms-setup/main/ms-dev-setup-script.sh | bash
+#
+# Local execution:
+#   git clone https://github.com/galactic-plane/fedora-42-ms-setup.git
+#   cd fedora-42-ms-setup
+#   chmod +x ms-dev-setup-script.sh
+#   ./ms-dev-setup-script.sh
+#
+# ================================================================================
+# TROUBLESHOOTING
+# ================================================================================
+#
+# View installation log:        sudo tail -f /var/log/ms-dev-setup.log
+# Search for errors:            sudo grep -i error /var/log/ms-dev-setup.log
+# Check backup files:           ls -la /var/backups/ms-dev-setup/
+# Verify installations:         Run verification commands in README.md
+#
+# Common issues:
+# • Permission errors: Ensure user is in wheel group with sudo access
+# • Network issues: Update system packages and clear DNF cache first
+# • VMware detection: Manual confirmation prompt if auto-detection fails
+# • PowerShell fallback: Script tries GitHub releases if Microsoft repo fails
+#
+# ================================================================================
 
 set -e  # Exit on any error
 
