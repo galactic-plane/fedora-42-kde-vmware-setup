@@ -1,6 +1,7 @@
 # Fedora-42-MS-Setup
 
 **Microsoft Development Stack Automated Installer for Fedora 42**
+
 **Awesome Codecs included as well**
 
 A comprehensive automation script that sets up a complete Microsoft development environment on Fedora Linux with KDE Plasma desktop. The script intelligently detects VMware environments and configures appropriate integrations with extensive logging and error handling.
